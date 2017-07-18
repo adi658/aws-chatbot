@@ -1,0 +1,22 @@
+{
+  "name": "AWS_Services",
+  "version": "0.0.0",
+  "description": "Simple chatbot to create multiple AWS Resources by using simple english statements. No need to know the aws commands.",
+  "main": "exportAwsbot.js",
+  "scripts": {
+    "test": "hi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adi658/aws-chatbot"
+  },
+  "keywords": [
+    "aws-services-bot"
+  ],
+  "author": "aditya bhangle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adi658/aws-chatbot/issues"
+  },
+  "homepage": "https://github.com/adi658/aws-chatbot"
+}

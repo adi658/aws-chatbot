@@ -1,0 +1,594 @@
+{
+  "name": "AWS_Services",
+  "description": null,
+  "intents": [
+    {
+      "intentName": "general_dis",
+      "intentVersion": "9"
+    },
+    {
+      "intentName": "general",
+      "intentVersion": "1"
+    },
+    {
+      "intentName": "create_bucket",
+      "intentVersion": "3"
+    },
+    {
+      "intentName": "aws_services",
+      "intentVersion": "3"
+    },
+    {
+      "intentName": "infra_summary",
+      "intentVersion": "2"
+    }
+  ],
+  "clarificationPrompt": {
+    "messages": [
+      {
+        "contentType": "PlainText",
+        "content": "Sorry, can you please repeat that?"
+      }
+    ],
+    "maxAttempts": 5,
+    "responseCard": null
+  },
+  "abortStatement": {
+    "messages": [
+      {
+        "contentType": "PlainText",
+        "content": "Sorry, I could not understand. Goodbye."
+      }
+    ],
+    "responseCard": null
+  },
+  "status": "READY",
+  "failureReason": null,
+  "lastUpdatedDate": "2017-07-18T11:25:55.398Z",
+  "createdDate": "2017-07-18T06:06:03.743Z",
+  "idleSessionTTLInSeconds": 300,
+  "voiceId": "Joanna",
+  "checksum": "6bec0c44-0dd3-4793-b4bb-a8f40bfbee86",
+  "version": "$LATEST",
+  "locale": "en-US",
+  "childDirected": false,
+  "dependencies": {
+    "intents": [
+      {
+        "name": "aws_services",
+        "description": null,
+        "slots": [
+          {
+            "name": "num_subnet_pri",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.NUMBER",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Number of Private Subnets?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 2,
+            "sampleUtterances": [],
+            "responseCard": null
+          },
+          {
+            "name": "num_vpc",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.NUMBER",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Number of VPCs?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 1,
+            "sampleUtterances": [],
+            "responseCard": null
+          },
+          {
+            "name": "vpc_name",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.Book",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "VPC Tag? (This tag will be used for all the sub resources)"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 4,
+            "sampleUtterances": [],
+            "responseCard": null
+          },
+          {
+            "name": "num_subnet_pub",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.NUMBER",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Number of Public Subnets?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 3,
+            "sampleUtterances": [],
+            "responseCard": null
+          }
+        ],
+        "sampleUtterances": [
+          "create {num_vpc} vpc with {num_subnet_pri} private and {num_subnet_pub} public subnet",
+          "create {num_vpc} vpc with {num_subnet_pub} public and {num_subnet_pri} private subnet",
+          "create {num_vpc} vpc called {vpc_name} with {num_subnet_pri} private and {num_subnet_pub} public subnet",
+          "create {num_vpc} vpc called {vpc_name} with {num_subnet_pub} public and {num_subnet_pri} private subnet"
+        ],
+        "confirmationPrompt": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Are you sure you want to create {num_vpc} with {num_subnet_pri} private subnets and {num_subnet_pub} public subnets"
+            }
+          ],
+          "maxAttempts": 3,
+          "responseCard": null
+        },
+        "rejectionStatement": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Cancelled.."
+            }
+          ],
+          "responseCard": null
+        },
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:076270498904:function:Aws_Services",
+            "messageVersion": "1.0"
+          }
+        },
+        "parentIntentSignature": null,
+        "lastUpdatedDate": "2017-07-18T06:36:12.419Z",
+        "createdDate": "2017-07-18T06:36:12.419Z",
+        "version": "3",
+        "checksum": "d7ac4b40-43dc-42cc-bd3f-3134380299c7"
+      },
+      {
+        "name": "general_dis",
+        "description": null,
+        "slots": [
+          {
+            "name": "general_service",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "aws_services",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "How can I help you?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "Can I help you with something?"
+                },
+                {
+                  "contentType": "PlainText",
+                  "content": "How may I help you?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"imageUrl\":\"https://d0.awsstatic.com/house-ads/partner/apn_ed_logo.png\",\"subTitle\":\"Choose One\",\"title\":\"Aws_Services\",\"buttons\":[{\"text\":\"Network Creation\",\"value\":\"Network Creation\"},{\"text\":\"Bucket Creation\",\"value\":\"Bucket Creation\"},{\"text\":\"Infrastructure Summary Document Creation\",\"value\":\"Infrastructure Summary Document Creation\"}]}]}"
+            },
+            "priority": 2,
+            "sampleUtterances": [],
+            "responseCard": null
+          }
+        ],
+        "sampleUtterances": [
+          "hi",
+          "hello",
+          "show options"
+        ],
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:076270498904:function:bot_general",
+            "messageVersion": "1.0"
+          }
+        },
+        "parentIntentSignature": null,
+        "lastUpdatedDate": "2017-07-18T11:25:17.412Z",
+        "createdDate": "2017-07-18T11:25:17.412Z",
+        "version": "9",
+        "checksum": "25312b54-5b5f-4846-89cc-afd099ec0945"
+      },
+      {
+        "name": "general",
+        "description": null,
+        "slots": [
+          {
+            "name": "option",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.AT_REGION",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "I can create a network | create S3 bucket | or get the entire Infrastructure summary for you. "
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 1,
+            "sampleUtterances": [],
+            "responseCard": null
+          }
+        ],
+        "sampleUtterances": [
+          "how are you",
+          "how are you doing"
+        ],
+        "followUpPrompt": {
+          "prompt": {
+            "messages": [
+              {
+                "contentType": "PlainText",
+                "content": "Great... How may I help you today"
+              },
+              {
+                "contentType": "PlainText",
+                "content": "Awesome... Can I help you with something?"
+              },
+              {
+                "contentType": "PlainText",
+                "content": "Doing fine.. How can I help you?"
+              },
+              {
+                "contentType": "PlainText",
+                "content": "Great.. What are you looking for?"
+              }
+            ],
+            "maxAttempts": 3,
+            "responseCard": null
+          },
+          "rejectionStatement": {
+            "messages": [
+              {
+                "contentType": "PlainText",
+                "content": "Ok.. Have a nice day.."
+              },
+              {
+                "contentType": "PlainText",
+                "content": "Cancelled.. Have a great day.."
+              }
+            ],
+            "responseCard": null
+          }
+        },
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:076270498904:function:Aws_Services",
+            "messageVersion": "1.0"
+          }
+        },
+        "parentIntentSignature": null,
+        "lastUpdatedDate": "2017-07-18T07:36:16.928Z",
+        "createdDate": "2017-07-18T07:36:16.928Z",
+        "version": "1",
+        "checksum": "d7d61b30-23eb-4b65-b206-47bad1ca760b"
+      },
+      {
+        "name": "create_bucket",
+        "description": null,
+        "slots": [
+          {
+            "name": "bucket",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "bucket_name",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Bucket Name?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 2,
+            "sampleUtterances": [],
+            "responseCard": null
+          },
+          {
+            "name": "aws_region",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "aws_regions",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Choose 1 - eu-west-1, us-west-1, us-west-2, ap-south-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1, cn-north-1, eu-central-1"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 1,
+            "sampleUtterances": [],
+            "responseCard": null
+          },
+          {
+            "name": "acl",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.Service",
+            "slotTypeVersion": null,
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Choose 1 - private, public-read, public-read-write, authenticated-read"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 3,
+            "sampleUtterances": [],
+            "responseCard": null
+          }
+        ],
+        "sampleUtterances": [
+          "bucket named {bucket}",
+          "bucket called {bucket}"
+        ],
+        "confirmationPrompt": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Are you sure you want to create a bucket named {bucket} in {aws_region} with {acl}"
+            }
+          ],
+          "maxAttempts": 3,
+          "responseCard": null
+        },
+        "rejectionStatement": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Cancelled.."
+            }
+          ],
+          "responseCard": null
+        },
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:076270498904:function:Aws_Services",
+            "messageVersion": "1.0"
+          }
+        },
+        "parentIntentSignature": null,
+        "lastUpdatedDate": "2017-07-18T07:07:26.066Z",
+        "createdDate": "2017-07-18T07:07:26.066Z",
+        "version": "3",
+        "checksum": "8a49e89c-6732-47bd-8ef1-1c5498df5e68"
+      },
+      {
+        "name": "infra_summary",
+        "description": null,
+        "slots": [
+          {
+            "name": "region",
+            "description": null,
+            "slotConstraint": "Required",
+            "slotType": "region",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Region?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": null
+            },
+            "priority": 1,
+            "sampleUtterances": [],
+            "responseCard": null
+          }
+        ],
+        "sampleUtterances": [
+          "infrastructure summary for {region}",
+          "infra summary for {region}"
+        ],
+        "confirmationPrompt": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Are you sure? Please note that the process may take about a 30 seconds to complete"
+            }
+          ],
+          "maxAttempts": 3,
+          "responseCard": null
+        },
+        "rejectionStatement": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Cancelled.."
+            }
+          ],
+          "responseCard": null
+        },
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:076270498904:function:InfraSummary",
+            "messageVersion": "1.0"
+          }
+        },
+        "parentIntentSignature": null,
+        "lastUpdatedDate": "2017-07-18T07:10:41.634Z",
+        "createdDate": "2017-07-18T07:10:41.634Z",
+        "version": "2",
+        "checksum": "952122b7-36de-4517-8f58-be971b9cd057"
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "region",
+        "description": "region",
+        "enumerationValues": [
+          {
+            "value": "ap-south-1"
+          },
+          {
+            "value": "eu-west-2"
+          },
+          {
+            "value": "eu-west-1"
+          },
+          {
+            "value": "ap-northeast-2"
+          },
+          {
+            "value": "ap-northeast-1"
+          },
+          {
+            "value": "sa-east-1"
+          },
+          {
+            "value": "ca-central-1"
+          },
+          {
+            "value": "ap-southeast-1"
+          },
+          {
+            "value": "ap-southeast-2"
+          },
+          {
+            "value": "eu-central-1"
+          },
+          {
+            "value": "us-east-1"
+          },
+          {
+            "value": "us-east-2"
+          },
+          {
+            "value": "us-west-1"
+          }
+        ],
+        "lastUpdatedDate": "2017-07-18T06:22:22.134Z",
+        "createdDate": "2017-07-18T06:22:22.134Z",
+        "version": "1",
+        "checksum": null
+      },
+      {
+        "name": "aws_regions",
+        "description": "aws_regions",
+        "enumerationValues": [
+          {
+            "value": "eu-west-2"
+          },
+          {
+            "value": "eu-west-1"
+          },
+          {
+            "value": "us-east-1"
+          },
+          {
+            "value": "us-east-2"
+          }
+        ],
+        "lastUpdatedDate": "2017-07-18T07:02:43.461Z",
+        "createdDate": "2017-07-18T07:02:43.461Z",
+        "version": "1",
+        "checksum": null
+      },
+      {
+        "name": "bucket_name",
+        "description": null,
+        "enumerationValues": [
+          {
+            "value": "aws-test-bucket"
+          },
+          {
+            "value": "my123-test-bucket"
+          },
+          {
+            "value": "test-bucket"
+          },
+          {
+            "value": "adi-testing"
+          },
+          {
+            "value": "adi658-testing"
+          },
+          {
+            "value": "my-test-bucket"
+          }
+        ],
+        "lastUpdatedDate": "2017-07-18T07:03:49.926Z",
+        "createdDate": "2017-07-18T07:03:49.926Z",
+        "version": "1",
+        "checksum": null
+      },
+      {
+        "name": "aws_services",
+        "description": "aws_services",
+        "enumerationValues": [
+          {
+            "value": "Bucket Creation"
+          },
+          {
+            "value": "Network Creation"
+          },
+          {
+            "value": "Infrastructure Summary Document Creation"
+          }
+        ],
+        "lastUpdatedDate": "2017-07-18T08:22:27.083Z",
+        "createdDate": "2017-07-18T08:22:27.083Z",
+        "version": "1",
+        "checksum": null
+      }
+    ]
+  }
+}
